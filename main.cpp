@@ -4,8 +4,6 @@
 #include <vector>
 #include <random>
 
-#include "Dekoder.h"
-#include "Koder.h"
 std::string data = "test";
 
 std::vector<bool> ASCIConverter(std::string s) {
@@ -20,16 +18,7 @@ std::vector<bool> ASCIConverter(std::string s) {
 }
 
 
-//Binary symmetric channel https://en.wikipedia.org/wiki/Binary_symmetric_channel
-bool BSCchannel(bool content) {
-    std::random_device rd;   // non-deterministic generator
-    std::mt19937 gen(rd());  // to seed mersenne twister.
-    std::bernoulli_distribution dis(0.1);
-    if (dis(gen)){
-       return !content;
-    }
-    return content;
-}
+
 
 //Gilberta-Elliotta https://en.wikipedia.org/wiki/Burst_error
 // std::vector<bool> GEchannel(std::vector<char> ch){
@@ -77,34 +66,33 @@ std::vector<std::vector<bool>> group(std::vector<bool> original, int groupSize) 
     return groups;
 }
 
-void ECCcoder(std::vector<bool> gen) {
-    std::vector<bool> ECC;
-    std::vector<bool> ECCDek;
-    std::vector<bool> out;
-    std::cout << "dane:" << std::endl;
-    std::vector<std::vector<bool>> dane8;
-    display(gen);
-    Koder koder;
-    Dekoder dekoder;
-    // for (bool ch : gen) {
-    //     ECC.emplace_back(koder.RC_koder(ch));
-    // }
-    ECC = koder.RC_koder(gen);
-
-
-    out.reserve(gen.size());
-    for (bool c : ECC) {
-        out.push_back(BSCchannel(c));
-    }
-    std::cout << "dane na odbiorze:" << std::endl;
-    display(out);
-
-    ECCDek = dekoder.RC_dekoder(out);
-    std::cout << "dane po dekoderze:" << std::endl;
-    display(ECCDek);
-
-    compare(gen, ECCDek);
-}
+// void ECCcoder(std::vector<bool> gen) {
+//     std::vector<bool> ECC;
+//     std::vector<bool> ECCDek;
+//     std::vector<bool> out;
+//     std::cout << "dane:" << std::endl;
+//     std::vector<std::vector<bool>> dane8;
+//     display(gen);
+//
+//     // for (bool ch : gen) {
+//     //     ECC.emplace_back(koder.RC_koder(ch));
+//     // }
+//     ECC = koder.RC_koder(gen);
+//
+//
+//     out.reserve(gen.size());
+//     for (bool c : ECC) {
+//         out.push_back(BSCchannel(c));
+//     }
+//     std::cout << "dane na odbiorze:" << std::endl;
+//     display(out);
+//
+//     ECCDek = dekoder.RC_dekoder(out);
+//     std::cout << "dane po dekoderze:" << std::endl;
+//     display(ECCDek);
+//
+//     compare(gen, ECCDek);
+// }
 void Rc(std::vector<bool> input) {
     std::vector<std::vector<bool>> grouped = group(input, 8);
     for (std::vector<bool> ch : grouped) {
@@ -115,11 +103,57 @@ void Rc(std::vector<bool> input) {
     }
 }
 
+#include "src/RC.h"
 int main() {
     std::vector<bool> gen =ASCIConverter(data);
     display(gen);
-    Rc(gen);
 
+    RC rc;
+    rc.run(gen);
+        
     //ECCcoder(gen);
     return 0;
 }
+
+
+//
+// std::vector<char> BCH_dekoder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> RS_dekoder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> LDP_dekoder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> Turbo_dekoder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> Fountain_dekoder(std::vector<char> ch) {
+//
+// }
+
+
+// std::vector<char> BCH_koder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> RS_koder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> LDP_koder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> Turbo_koder(std::vector<char> ch) {
+//
+// }
+//
+// std::vector<char> Fountain_koder(std::vector<char> ch) {
+//
+// }

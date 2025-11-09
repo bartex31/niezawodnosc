@@ -2,14 +2,14 @@
 // Created by barto on 15.10.2025.
 //
 
-#ifndef KODER_H
-#define KODER_H
+#ifndef KODERRC_H
+#define KODERRC_H
 #include <vector>
 
 
-class Koder {
+class KoderRC{
     public:
-    Koder();
+    KoderRC();
     std::vector<bool> RC_koder(std::vector<bool> ch);
 };
 
