@@ -20,3 +20,31 @@ std::vector<bool> Transmision::BSCchannel(std::vector<bool> content) {
 
     return content;
 }
+
+std::vector<bool> Transmision::GEchannel(std::vector<bool> content) {
+    std::random_device rd;   // non-deterministic generator
+    std::mt19937 gen(rd());  // to seed mersenne twister.
+    std::bernoulli_distribution dis(0.1);
+    std::bernoulli_distribution dis2(0.5);
+    bool change = false;
+    for (int i = 0; i < content.size(); i++) {
+        if (!change) {
+            if (dis(gen)) {
+                change = true;
+                content[i] = !content[i];
+            }
+        }else {
+            if (dis2(gen)) {
+               change = false;
+            }else {
+                content[i] = !content[i] ;
+            }
+        }
+
+
+
+    }
+
+
+    return content;
+}

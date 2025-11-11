@@ -10,9 +10,15 @@
 RC::RC(){
 }
 
-void RC::run(std::vector<bool> data){
-    data = koderRC.RC_koder(data);
-    data = transmision.BSCchannel(data);
-    data = dekoderRC.RC_Dekoder(data);
+Wynik RC::run(std::vector<bool> data){
+    Wynik RC;
 
+    data = koderRC.RC_koder(data);
+    RC.original = data;
+    data = transmision.BSCchannel(data);
+    RC.BSC = data;
+    data = transmision.GEchannel(data);
+    RC.GE = data;
+    data = dekoderRC.RC_Dekoder(data);
+    return RC;
 }

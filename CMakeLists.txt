@@ -8,4 +8,5 @@ add_executable(untitled main.cpp
         src/Kodery/KoderRC.cpp
         src/Dekodery/DekoderRC.cpp
         src/Transmision.cpp
+        Wynik.cpp
 )

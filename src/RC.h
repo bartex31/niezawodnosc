@@ -8,7 +8,7 @@
 #include "Transmision.h"
 #include "Kodery/KoderRC.h"
 #include "Dekodery/DeKoderRC.h"
-
+#include "../Wynik.h"
 
 class RC {
     public:
@@ -16,7 +16,7 @@ class RC {
     KoderRC koderRC;
     DekoderRC dekoderRC;
     Transmision transmision;
-    void run(std::vector<bool> data);
+    Wynik run(std::vector<bool> data);
 };
 
 

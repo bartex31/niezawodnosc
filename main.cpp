@@ -3,7 +3,7 @@
 #include <bitset>
 #include <vector>
 #include <random>
-
+#include "Wynik.h"
 std::string data = "test";
 
 std::vector<bool> ASCIConverter(std::string s) {
@@ -93,6 +93,7 @@ std::vector<std::vector<bool>> group(std::vector<bool> original, int groupSize) 
 //
 //     compare(gen, ECCDek);
 // }
+
 void Rc(std::vector<bool> input) {
     std::vector<std::vector<bool>> grouped = group(input, 8);
     for (std::vector<bool> ch : grouped) {
@@ -102,15 +103,31 @@ void Rc(std::vector<bool> input) {
         std::cout << std::endl;
     }
 }
-
+void displayWynik(Wynik wynik) {
+    for (int i =0; i < wynik.original.size(); i++) {
+        std::cout << wynik.original[i];
+    }
+    std::cout << std::endl;
+    for (int i =0; i < wynik.GE.size(); i++) {
+        std::cout << wynik.GE[i];
+    }
+    std::cout << std::endl;
+    for (int i =0; i < wynik.BSC.size(); i++) {
+        std::cout << wynik.BSC[i];
+    }
+}
 #include "src/RC.h"
 int main() {
+    RC rc;
+    Wynik wynikRC;
     std::vector<bool> gen =ASCIConverter(data);
     display(gen);
 
-    RC rc;
-    rc.run(gen);
-        
+    wynikRC = rc.run(gen);
+
+
+    displayWynik(wynikRC);
+
     //ECCcoder(gen);
     return 0;
 }
