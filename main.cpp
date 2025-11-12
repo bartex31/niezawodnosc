@@ -17,32 +17,6 @@ std::vector<bool> ASCIConverter(std::string s) {
     return converted;
 }
 
-
-
-
-//Gilberta-Elliotta https://en.wikipedia.org/wiki/Burst_error
-// std::vector<bool> GEchannel(std::vector<char> ch){
-// return ;
-// }
-
-void display(std::vector<bool> ch) {
-    int x=0, y=0;
-    for (int i = 0; i < ch.size(); i++) {
-
-        std::cout << ch[i];
-        x++;
-        if (x==8) {
-            x=0;
-            std::cout << " ";
-            y++;
-        }
-        if (y==8) {
-            y=0;
-            std::cout <<std::endl;
-        }
-    }
-    std::cout << std::endl;
-}
 void compare(std::vector<bool> &original, const std::vector<bool>& converted) {
    // std::vector<std::string> convertedStrings;
     for (int i = 0; i < original.size(); i++) {
@@ -53,17 +27,36 @@ void compare(std::vector<bool> &original, const std::vector<bool>& converted) {
 
     }
 }
-std::vector<std::vector<bool>> group(std::vector<bool> original, int groupSize) {
-    std::vector<std::vector<bool>> groups;
-    std::vector<bool> converted;
-    for (int i = 0; i < original.size(); i+=groupSize) {
-        for (int j = 0; j < groupSize; j++) {
-            converted.emplace_back(original[i+j]);
-        }
-        groups.emplace_back(converted);
-        converted.clear();
+
+
+
+void displayWynik(Wynik wynik) {
+    for (int i =0; i < wynik.original.size(); i++) {
+        std::cout << wynik.original[i];
     }
-    return groups;
+    std::cout << std::endl;
+    for (int i =0; i < wynik.GE.size(); i++) {
+        std::cout << wynik.GE[i];
+    }
+    std::cout << std::endl;
+    for (int i =0; i < wynik.BSC.size(); i++) {
+        std::cout << wynik.BSC[i];
+    }
+}
+
+#include "src/RC.h"
+int main() {
+    RC rc;
+    Wynik wynikRC;
+    std::vector<bool> gen =ASCIConverter(data);
+    
+    wynikRC = rc.run(gen);
+
+
+    displayWynik(wynikRC);
+
+    //ECCcoder(gen);
+    return 0;
 }
 
 // void ECCcoder(std::vector<bool> gen) {
@@ -93,46 +86,6 @@ std::vector<std::vector<bool>> group(std::vector<bool> original, int groupSize) 
 //
 //     compare(gen, ECCDek);
 // }
-
-void Rc(std::vector<bool> input) {
-    std::vector<std::vector<bool>> grouped = group(input, 8);
-    for (std::vector<bool> ch : grouped) {
-        for (bool c : ch) {
-            std::cout << c;
-        }
-        std::cout << std::endl;
-    }
-}
-void displayWynik(Wynik wynik) {
-    for (int i =0; i < wynik.original.size(); i++) {
-        std::cout << wynik.original[i];
-    }
-    std::cout << std::endl;
-    for (int i =0; i < wynik.GE.size(); i++) {
-        std::cout << wynik.GE[i];
-    }
-    std::cout << std::endl;
-    for (int i =0; i < wynik.BSC.size(); i++) {
-        std::cout << wynik.BSC[i];
-    }
-}
-#include "src/RC.h"
-int main() {
-    RC rc;
-    Wynik wynikRC;
-    std::vector<bool> gen =ASCIConverter(data);
-    display(gen);
-
-    wynikRC = rc.run(gen);
-
-
-    displayWynik(wynikRC);
-
-    //ECCcoder(gen);
-    return 0;
-}
-
-
 //
 // std::vector<char> BCH_dekoder(std::vector<char> ch) {
 //
