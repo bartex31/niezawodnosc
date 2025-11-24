@@ -5,10 +5,10 @@
 #ifndef RC_H
 #define RC_H
 
-#include "Transmision.h"
-#include "Kodery/KoderRC.h"
-#include "Dekodery/DeKoderRC.h"
-#include "../Wynik.h"
+#include "../Transmision.h"
+#include "../Kodery/KoderRC.h"
+#include "../Dekodery/DeKoderRC.h"
+#include "../../Wynik.h"
 
 class RC {
     public:

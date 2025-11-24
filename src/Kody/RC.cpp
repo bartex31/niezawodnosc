@@ -4,9 +4,9 @@
 
 #include "RC.h"
 
-#include "Transmision.h"
-#include "Kodery/KoderRC.h"
-#include "Dekodery/DekoderRC.h"
+#include "../Transmision.h"
+#include "../Kodery/KoderRC.h"
+#include "../Dekodery/DekoderRC.h"
 RC::RC(){
 }
 
@@ -20,5 +20,6 @@ Wynik RC::run(std::vector<bool> data){
     data = transmision.GEchannel(data);
     RC.GE = data;
     data = dekoderRC.RC_Dekoder(data);
+    RC.Dekoded = data;
     return RC;
 }

@@ -44,13 +44,15 @@ void displayWynik(Wynik wynik) {
     }
 }
 
-#include "src/RC.h"
+#include "src/Kody/RC.h"
 int main() {
     RC rc;
+
     Wynik wynikRC;
     std::vector<bool> gen =ASCIConverter(data);
-    
     wynikRC = rc.run(gen);
+
+
 
 
     displayWynik(wynikRC);

@@ -11,6 +11,7 @@ class Wynik{
         std::vector<bool> original;
         std::vector<bool> BSC;
         std::vector<bool> GE;
+        std::vector<bool> Dekoded;
 
         Wynik();
 };
