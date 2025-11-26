@@ -5,13 +5,13 @@
 #include "Transmision.h"
 
 #include <random>
-float BSCchange = 0.1;
-float GECchange = 0.1;
+float BSCchange = 0.05;
+float GECchange = 0.05;
 float GECchangeReturn = 0.8;
 
 std::vector<std::vector<bool>> Transmision::BSCchannel(std::vector<std::vector<bool>>& content) {
-    std::random_device rd;   // non-deterministic generator
-    std::mt19937 gen(rd());  // to seed mersenne twister.
+    std::random_device rd;
+    std::mt19937 gen(rd());
     std::bernoulli_distribution dis(BSCchange);
     for (int i = 0; i < content.size(); i++) {
         for (int j = 0; j < content[i].size(); j++) {
@@ -24,8 +24,8 @@ std::vector<std::vector<bool>> Transmision::BSCchannel(std::vector<std::vector<b
 }
 
 std::vector<std::vector<bool>> Transmision::GEchannel(std::vector<std::vector<bool>>& content) {
-    std::random_device rd;   // non-deterministic generator
-    std::mt19937 gen(rd());  // to seed mersenne twister.
+    std::random_device rd;
+    std::mt19937 gen(rd());
     std::bernoulli_distribution dis(GECchange);
     std::bernoulli_distribution dis2(GECchangeReturn);
     bool change = false;

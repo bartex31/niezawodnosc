@@ -17,12 +17,11 @@ const std::vector<bool> G_X = {true, true, true, false, true};
 
 std::vector<bool> encode(std::vector<bool> inp) {
 
-    // Tworzymy KOPIĘ roboczą (working_vector)
+
     std::vector<bool> working_vector = inp;
 
-    working_vector.resize(N,false); // przesunięcie u(x) o R=4 pozycje
+    working_vector.resize(N,false);
 
-    // Dzielenie: operujemy na working_vector
     for (int i = 0; i <= working_vector.size()-G_X.size(); i++) {
         if (working_vector[i] == true) {
             for (int j = 0; j < G_X.size(); j++) {
@@ -31,7 +30,6 @@ std::vector<bool> encode(std::vector<bool> inp) {
         }
     }
 
-    // Zwracamy resztę (ostatnie R bitów)
     std::vector<bool> out(working_vector.end()-R,working_vector.end());
     return out;
 }

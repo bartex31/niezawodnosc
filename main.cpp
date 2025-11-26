@@ -47,7 +47,31 @@ void displayWynik(Wynik wynik) {
         }
     }
     std::cout << std::endl;
+    for (std::vector<bool> b : wynik.Koder) {
+        for (bool v : b) {
+            std::cout << v;
+        }
+    }
+    std::cout << std::endl;
+    for (std::vector<bool> b : wynik.GE) {
+        for (bool v : b) {
+            std::cout << v;
+        }
+    }
+    std::cout << std::endl;
+    for (std::vector<bool> b : wynik.BSC) {
+        for (bool v : b) {
+            std::cout << v;
+        }
+    }
+    std::cout << std::endl;
     for (std::vector<bool> b : wynik.DekodedGE) {
+        for (bool v : b) {
+            std::cout << v;
+        }
+    }
+    std::cout << std::endl;
+    for (std::vector<bool> b : wynik.DekodedBSC) {
         for (bool v : b) {
             std::cout << v;
         }
@@ -96,7 +120,7 @@ void BCHRun() {
     std::cout<<"GE ";
     compare(Bchwynik.original,Bchwynik.DekodedGE);
     std::cout<<std::endl;
-    displayWynik(Bchwynik);
+    //displayWynik(Bchwynik);
 }
 
 int main() {
