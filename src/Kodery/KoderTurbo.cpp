@@ -4,4 +4,3 @@
 
 #include "KoderTurbo.h"
 
-KoderTurbo::

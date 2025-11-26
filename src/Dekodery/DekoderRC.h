@@ -10,7 +10,7 @@
 class DekoderRC {
 public:
       DekoderRC();
-      std::vector<bool> RC_Dekoder(std::vector<bool> ch);
+      std::vector<std::vector<bool>> RC_Dekoder(std::vector<std::vector<bool>> ch, int size);
 };
 
 

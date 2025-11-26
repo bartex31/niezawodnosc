@@ -10,7 +10,7 @@
 class KoderRC{
     public:
     KoderRC();
-    std::vector<bool> RC_koder(std::vector<bool> ch);
+    std::vector<std::vector<bool>> RC_koder(std::vector<std::vector<bool>> ch, int size);
 };
 
 

@@ -9,8 +9,9 @@
 #include <vector>
 
 class DekoderBCH {
+    public:
     DekoderBCH();
-    std::vector<bool> BCH_Dekoder(std::vector<bool> ch);
+    std::vector<std::vector<bool>> BCH_Dekoder(std::vector<std::vector<bool>>& ch);
 };
 
 

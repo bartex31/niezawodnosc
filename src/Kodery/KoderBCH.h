@@ -10,8 +10,8 @@
 class KoderBCH {
 public:
     KoderBCH();
-    std::vector<bool> BCH_koder(std::vector<bool> ch);
-};z
+    std::vector<std::vector<bool>> BCH_koder(std::vector<bool> ch);
+};
 
 
 

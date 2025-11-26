@@ -10,16 +10,33 @@
 RC::RC(){
 }
 
-Wynik RC::run(std::vector<bool> data){
+Wynik RC::run(std::vector<bool> data, int n){
+    std::vector<std::vector<bool>> dataBSC;
+    std::vector<std::vector<bool>> dataGE;
+    std::vector<std::vector<bool>> origin;
+
     Wynik RC;
 
-    data = koderRC.RC_koder(data);
-    RC.original = data;
-    data = transmision.BSCchannel(data);
-    RC.BSC = data;
-    data = transmision.GEchannel(data);
-    RC.GE = data;
-    data = dekoderRC.RC_Dekoder(data);
-    RC.Dekoded = data;
+    int size =n;
+    for(int i=0;i<data.size();i++) {
+        std::vector<bool> temp;
+        temp.push_back(data[i]);
+        origin.push_back(temp);
+    }
+    RC.original = origin;
+
+    std::vector<std::vector<bool>> koder;
+    koder = koderRC.RC_koder(origin,size);
+    RC.Koder = koder;
+
+    dataBSC = transmision.BSCchannel(koder);
+    RC.BSC = dataBSC;
+    dataGE = transmision.GEchannel(koder);
+    RC.GE = dataGE;
+
+    RC.DekodedBSC = dekoderRC.RC_Dekoder(dataBSC,size);
+
+
+    RC.DekodedGE = dekoderRC.RC_Dekoder(dataGE,size);
     return RC;
 }

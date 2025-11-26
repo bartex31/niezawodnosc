@@ -5,46 +5,46 @@
 #include "Transmision.h"
 
 #include <random>
+float BSCchange = 0.1;
+float GECchange = 0.1;
+float GECchangeReturn = 0.8;
 
-
-std::vector<bool> Transmision::BSCchannel(std::vector<bool> content) {
+std::vector<std::vector<bool>> Transmision::BSCchannel(std::vector<std::vector<bool>>& content) {
     std::random_device rd;   // non-deterministic generator
     std::mt19937 gen(rd());  // to seed mersenne twister.
-    std::bernoulli_distribution dis(0.1);
+    std::bernoulli_distribution dis(BSCchange);
     for (int i = 0; i < content.size(); i++) {
-        if (dis(gen)){
-            content[i] = !content[i] ;
+        for (int j = 0; j < content[i].size(); j++) {
+            if (dis(gen)){
+                content[i][j] = !content[i][j] ;
+            }
         }
-
     }
-
     return content;
 }
 
-std::vector<bool> Transmision::GEchannel(std::vector<bool> content) {
+std::vector<std::vector<bool>> Transmision::GEchannel(std::vector<std::vector<bool>>& content) {
     std::random_device rd;   // non-deterministic generator
     std::mt19937 gen(rd());  // to seed mersenne twister.
-    std::bernoulli_distribution dis(0.1);
-    std::bernoulli_distribution dis2(0.5);
+    std::bernoulli_distribution dis(GECchange);
+    std::bernoulli_distribution dis2(GECchangeReturn);
     bool change = false;
     for (int i = 0; i < content.size(); i++) {
-        if (!change) {
-            if (dis(gen)) {
-                change = true;
-                content[i] = !content[i];
-            }
-        }else {
-            if (dis2(gen)) {
-               change = false;
+        for (int j = 0; j < content[i].size(); j++) {
+            if (!change) {
+                if (dis(gen)) {
+                    change = true;
+                    content[i][j] = !content[i][j];
+                }
             }else {
-                content[i] = !content[i] ;
+                if (dis2(gen)) {
+                    change = false;
+                }else {
+                    content[i][j] = !content[i][j] ;
+                }
             }
         }
-
-
-
     }
-
 
     return content;
 }

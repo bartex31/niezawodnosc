@@ -5,19 +5,26 @@
 #include "DekoderRC.h"
 
 #include <cmath>
+#include <iostream>
+#include <ostream>
 #include <vector>
 DekoderRC::DekoderRC(){
 
 }
 //Repetition code
-std::vector<bool> DekoderRC::RC_Dekoder(std::vector<bool> ch) {
-    std::vector<bool> RC_dekoder;
-    for (int i = 0; i+2 <= ch.size();i+=3) {
+std::vector<std::vector<bool>> DekoderRC::RC_Dekoder(std::vector<std::vector<bool>> ch, int size) {
+    std::vector<std::vector<bool>> full;
+    for (std::vector ch2 : ch) {
+        int sum = 0;
+        for (bool ch3 : ch2) {
+            std::cout << ch3 ;
+            sum += ch3;
+        }
+        std::cout<<std::endl;
+        int wiekszosc = (size/2)+1;
+        bool bo = (sum >= wiekszosc);
 
-        int sum =ch[i] + ch[(i + 1)] + ch[i + 2];
-        bool bit = (sum >= 2);
-        RC_dekoder.push_back(bit);
-
+        full.push_back({bo});
     }
-    return RC_dekoder;
+    return full;
 }

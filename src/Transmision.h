@@ -9,8 +9,8 @@
 
 class Transmision {
     public:
-    std::vector<bool> static BSCchannel(std::vector<bool> content);
-    std::vector<bool> static GEchannel(std::vector<bool> content);
+    std::vector<std::vector<bool>> static BSCchannel(std::vector<std::vector<bool>>& content);
+    std::vector<std::vector<bool>> static GEchannel(std::vector<std::vector<bool>>& content);
 };
 
 

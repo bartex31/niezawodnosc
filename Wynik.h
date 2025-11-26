@@ -8,10 +8,12 @@
 class Wynik{
 
     public:
-        std::vector<bool> original;
-        std::vector<bool> BSC;
-        std::vector<bool> GE;
-        std::vector<bool> Dekoded;
+        std::vector<std::vector<bool>> original;
+        std::vector<std::vector<bool>> Koder;
+        std::vector<std::vector<bool>> BSC;
+        std::vector<std::vector<bool>> GE;
+        std::vector<std::vector<bool>> DekodedBSC;
+        std::vector<std::vector<bool>> DekodedGE;
 
         Wynik();
 };

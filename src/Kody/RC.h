@@ -16,7 +16,7 @@ class RC {
     KoderRC koderRC;
     DekoderRC dekoderRC;
     Transmision transmision;
-    Wynik run(std::vector<bool> data);
+    Wynik run(std::vector<bool> data,int n);
 };
 
 
