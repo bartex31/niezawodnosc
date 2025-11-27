@@ -4,113 +4,74 @@
 
 #include "RS.h"
 
+#include <bitset>
 #include <cstdint>
 
-
-RS::RS(){
-}
-//https://www.schifra.com/downloads.html
-Wynik1 RS::run(std::vector<bool> data){
-    Wynik1 wynikRS;
-    std::vector<std::vector<bool>> dataBSC;
-    std::vector<std::vector<bool>> dataGE;
-    std::cout<<"dataBSC"<<std::endl;
-    for (bool i : data) {
-        std::cout<<i;
-    }
-
-    std::cout<<std::endl;
-    // --- 1. Konwersja Bity -> Bajty ---
-    std::vector<uint8_t> data1;
-    int ammoutBytes = (data.size()+7)/8;
-    data1.resize(ammoutBytes);
-
-    for(int i = 0; i < ammoutBytes; i++) {
-        uint8_t byte = 0;
-        for(int j = 0; j < 8; j++) {
-            int bit = i*8+j;
-            byte <<= 1;
-            if (bit < data.size() && data[bit]) {
-                byte |= 1;
-            }
-        }
-        data1[i] = byte;
-    }
-    wynikRS.original = data1;
-    for (uint8_t i : wynikRS.original) {
-        std::cout<<i;
-    }
-    std::cout<<std::endl;
-    // --- 2. Kodowanie ---
-    // Wynik to 255 bajtów (CODE_LENGTH)
-    std::vector<uint8_t> Koder = koderRS.RS_koder(data1);
-
-    // --- 3. Bajty -> Bity (dla kanału) ---
-    // Musimy przekonwertować CAŁY blok zakodowany (255 bajtów), a nie data1!
-    std::vector<std::vector<bool>> temp;
-    for (uint8_t byte : Koder) { // Iterujemy po 'Koder' (255), nie 'data1'
+std::vector<std::vector<bool>> bytesToBools(const std::vector<uint8_t>& bytes) {
+    std::vector<std::vector<bool>> result;
+    for (uint8_t byte : bytes) {
         std::vector<bool> bits;
         for (int i = 7; i >= 0; --i) {
             bits.push_back((byte >> i) & 1);
         }
-        temp.push_back(bits);
+        result.push_back(bits);
     }
-    for (std::vector<bool> bits : temp) {
-        for (bool i : bits) {
-            std::cout<<i;
-        }
-    }
-    std::cout<<std::endl;
-    // --- 4. Symulacja kanału ---
-    dataBSC = Transmision::BSCchannel(temp); // Zwraca 255 wektorów bitów
-    // wynikRS.BSC = ... (opcjonalne mapowanie jeśli potrzebne)
+    return result;
+}
+std::vector<uint8_t> boolsToBytes(const std::vector<bool>& bits) {
+    int n = (bits.size() + 7) / 8;
+    std::vector<uint8_t> bytes(n, 0);
 
-    dataGE = Transmision::GEchannel(temp);   // Zwraca 255 wektorów bitów
-    // wynikRS.GE = ...
-    for (std::vector<bool> bits : dataBSC) {
-        for (bool i : bits) {
-            std::cout<<i;
-        }
-    }
-    // --- 5. Bity -> Bajty (Odbiór) ---
-    // Tu był błąd "Invalid block size". Musimy odebrać 255 bajtów.
-
-    // Odbiór BSC
-    std::vector<uint8_t> dataBSC_bytes(CODE_LENGTH, 0); // Rozmiar CODE_LENGTH!
-    for (int i = 0; i < CODE_LENGTH; i++) {
+    for (int i = 0; i < n; ++i) {
         uint8_t byte = 0;
-        for (int j = 0; j < 8; j++) {
-            // Zakładam, że kanał nie zmienia długości wektora bitów (zawsze 8)
-            // Jeśli kanał gubi bity, trzeba dodać sprawdzenie size()
-            if (j < dataBSC[i].size() && dataBSC[i][j]) { // Prosta konwersja
-                 // Uwaga: Twoja logika pakowania bitów (powyżej) była:
-                 // MSB (i=7) -> push_back. Więc bit 0 w wektorze to MSB.
-                 // Tutaj musimy to odtworzyć odwrotnie:
-                 byte |= (1 << (7 - j));
+        for (int j = 0; j < 8; ++j) {
+            int index = i * 8 + j;
+            byte <<= 1;
+            if (index < bits.size() && bits[index]) {
+                byte |= 1;
             }
         }
-        dataBSC_bytes[i] = byte;
+        bytes[i] = byte;
     }
-
-    // Odbiór GE (to samo - CODE_LENGTH)
-    std::vector<uint8_t> dataGE_bytes(CODE_LENGTH, 0);
-    for (int i = 0; i < CODE_LENGTH; i++) {
+    return bytes;
+}
+std::vector<uint8_t> vectorBoolToBytes(const std::vector<std::vector<bool>>& vv) {
+    std::vector<uint8_t> bytes(vv.size(), 0);
+    for (size_t i = 0; i < vv.size(); ++i) {
         uint8_t byte = 0;
-        for (int j = 0; j < 8; j++) {
-             if (j < dataGE[i].size() && dataGE[i][j]) {
-                 byte |= (1 << (7 - j));
-             }
+        for (size_t j = 0; j < vv[i].size(); ++j) {
+            byte <<= 1;
+            if (vv[i][j]) byte |= 1;
         }
-        dataGE_bytes[i] = byte;
+        bytes[i] = byte;
     }
-    std::cout<<"dataBSC"<<std::endl;
-    for (uint8_t byte : dataBSC_bytes) {
-        std::cout<<byte;
-    }
+    return bytes;
+}
 
-    // --- 6. Dekodowanie ---
-    wynikRS.DekodedGE = dekoderRS.RS_Dekoder(dataGE_bytes);
-    wynikRS.DekodedBSC = dekoderRS.RS_Dekoder(dataBSC_bytes);
+RS::RS(){
+}
+//https://www.schifra.com/downloads.html
+Wynik1 RS::run(std::vector<bool> data1) {
+    std::vector<bool> data = {1,0,1,0,1,1,0,1};
+    Wynik1 wynikRS;
 
+    std::vector<uint8_t> dataBytes = boolsToBytes(data);
+    wynikRS.original = dataBytes;
+    std::cout << std::endl;
+    std::vector<uint8_t> Koder = koderRS.RS_koder(dataBytes);
+    std::vector<std::vector<bool>> temp = bytesToBools(Koder);
+
+    std::vector<std::vector<bool>> dataBSC = Transmision::BSCchannel(temp);
+    std::vector<std::vector<bool>> dataGE  = Transmision::GEchannel(temp);
+
+    std::vector<uint8_t> dataBSC_bytes = vectorBoolToBytes(dataBSC);
+    std::vector<uint8_t> dataGE_bytes  = vectorBoolToBytes(dataGE);
+
+    std::vector<uint8_t> decodedBSC = dekoderRS.RS_Dekoder(dataBSC_bytes);
+    std::vector<uint8_t> decodedGE  = dekoderRS.RS_Dekoder(dataGE_bytes);
+
+    wynikRS.DekodedBSC = bytesToBools(decodedBSC);
+    wynikRS.DekodedGE  = bytesToBools(decodedGE);
+    std::cout << std::endl;
     return wynikRS;
 }

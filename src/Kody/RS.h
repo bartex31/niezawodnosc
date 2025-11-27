@@ -16,7 +16,7 @@ public:
     KoderRS koderRS;
     DekoderRS dekoderRS;
     Transmision transmision;
-    Wynik1 run(std::vector<bool> data);
+    Wynik1 run(std::vector<bool> data1);
 };
 
 

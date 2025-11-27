@@ -14,8 +14,8 @@ public:
      std::vector<uint8_t> Koder;
      std::vector<std::vector<bool>> BSC;
      std::vector<std::vector<bool>> GE;
-     std::vector<uint8_t> DekodedBSC;
-     std::vector<uint8_t> DekodedGE;
+     std::vector<std::vector<bool>> DekodedBSC;
+     std::vector<std::vector<bool>> DekodedGE;
 
     Wynik1();
 };
