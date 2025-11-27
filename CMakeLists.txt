@@ -12,8 +12,10 @@ add_executable(untitled
         #${KOD_SRC}
         src/Kody/BCH.cpp
         src/Kody/RC.cpp
+        src/Kody/RS.cpp
         ${KODERY_SRC}
         ${DEKODERY_SRC}
         src/Transmision.cpp
         Wynik.cpp
+        Wynik1.cpp
 )

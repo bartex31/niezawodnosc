@@ -5,9 +5,9 @@
 #include "Transmision.h"
 
 #include <random>
-float BSCchange = 0.05;
-float GECchange = 0.05;
-float GECchangeReturn = 0.8;
+float BSCchange = 0.0001;
+float GECchange = 0.0001;
+float GECchangeReturn = 0.9;
 
 std::vector<std::vector<bool>> Transmision::BSCchannel(std::vector<std::vector<bool>>& content) {
     std::random_device rd;

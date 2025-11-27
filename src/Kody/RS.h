@@ -8,7 +8,7 @@
 #include "../Transmision.h"
 #include "../Kodery/KoderRS.h"
 #include "../Dekodery/DeKoderRS.h"
-#include "../../Wynik.h"
+#include "../../Wynik1.h"
 
 class RS {
 public:
@@ -16,7 +16,7 @@ public:
     KoderRS koderRS;
     DekoderRS dekoderRS;
     Transmision transmision;
-    Wynik run(std::vector<bool> data);
+    Wynik1 run(std::vector<bool> data);
 };
 
 

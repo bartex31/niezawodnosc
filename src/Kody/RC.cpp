@@ -29,9 +29,9 @@ Wynik RC::run(std::vector<bool> data, int n){
     koder = koderRC.RC_koder(origin,size);
     RC.Koder = koder;
 
-    dataBSC = transmision.BSCchannel(koder);
+    dataBSC = Transmision::BSCchannel(koder);
     RC.BSC = dataBSC;
-    dataGE = transmision.GEchannel(koder);
+    dataGE = Transmision::GEchannel(koder);
     RC.GE = dataGE;
 
     RC.DekodedBSC = dekoderRC.RC_Dekoder(dataBSC,size);

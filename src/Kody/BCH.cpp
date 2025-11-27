@@ -10,7 +10,7 @@ Wynik BCH::run(std::vector<bool> data){
     Wynik BCH;
     std::vector<std::vector<bool>> dataBSC;
     std::vector<std::vector<bool>> dataGE;
-    int K =3;
+    int K =4;
     int N= 7;
     std::vector<std::vector<bool>> original;
     for (int i = 0; i < data.size(); i+=K) {
@@ -26,7 +26,7 @@ Wynik BCH::run(std::vector<bool> data){
     }
     BCH.original = original;
 
-    std::vector<std::vector<bool> > koderout = koderBCH.BCH_koder(data);
+    std::vector<std::vector<bool> > koderout = koderBCH.BCH_koder(original);
     BCH.Koder = koderout;
 
     dataBSC = Transmision::BSCchannel(koderout);

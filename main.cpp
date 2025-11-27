@@ -112,7 +112,7 @@ void RCrun(){
 #include "src/Kody/BCH.h"
 void BCHRun() {
     BCH bch;
-    std::vector<bool> gen =generate_random_bits(50);
+    std::vector<bool> gen =generate_random_bits(20);
     Wynik Bchwynik = bch.run(gen);
     std::cout<<"BSC ";
     //displayWynik(wynikRC);
@@ -120,45 +120,27 @@ void BCHRun() {
     std::cout<<"GE ";
     compare(Bchwynik.original,Bchwynik.DekodedGE);
     std::cout<<std::endl;
-    //displayWynik(Bchwynik);
+    displayWynik(Bchwynik);
+}
+#include "src/Kody/RS.h"
+#include "Wynik1.h"
+void RSrun() {
+    RS rs;
+    Wynik1 wynikRS;
+    std::vector<bool> gen =generate_random_bits(13);
+    wynikRS = rs.run(gen);
+
+
 }
 
 int main() {
     //RCrun();
-    BCHRun();
-    //displayWynik(wynikRC);
-
-    //ECCcoder(gen);
+    //BCHRun();
+    RSrun();
     return 0;
 }
 
-// void ECCcoder(std::vector<bool> gen) {
-//     std::vector<bool> ECC;
-//     std::vector<bool> ECCDek;
-//     std::vector<bool> out;
-//     std::cout << "dane:" << std::endl;
-//     std::vector<std::vector<bool>> dane8;
-//     display(gen);
 //
-//     // for (bool ch : gen) {
-//     //     ECC.emplace_back(koder.RC_koder(ch));
-//     // }
-//     ECC = koder.RC_koder(gen);
-//
-//
-//     out.reserve(gen.size());
-//     for (bool c : ECC) {
-//         out.push_back(BSCchannel(c));
-//     }
-//     std::cout << "dane na odbiorze:" << std::endl;
-//     display(out);
-//
-//     ECCDek = dekoder.RC_dekoder(out);
-//     std::cout << "dane po dekoderze:" << std::endl;
-//     display(ECCDek);
-//
-//     compare(gen, ECCDek);
-// }
 //
 // std::vector<char> BCH_dekoder(std::vector<char> ch) {
 //
